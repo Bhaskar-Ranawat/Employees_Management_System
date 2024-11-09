@@ -1,0 +1,122 @@
+//logic for refractoring the app.jsx ----->
+
+import React, { useContext, useEffect, useState } from "react";
+import AdminDashboard from "./Components/Dashboard/AdminDashboard";
+import Login from "./Components/Auth/Login";
+import EmployeeDashboard from "./Components/Dashboard/EmployeeDashboard";
+import { getLocalStorage, setLocalStorage } from "./utils/localStorage";
+import { AuthContext } from "./context/AuthProvider";
+
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [loggedInUserData, setLoggedInUserData] = useState(null);
+  const authData = useContext(AuthContext);
+
+  // Load user data from localStorage on component mount
+  useEffect(() => {
+    const loggedInUser = getLocalStorage("loggedInUser");
+    if (loggedInUser) {
+      setUser(loggedInUser.role);
+      setLoggedInUserData(loggedInUser.data);
+    }
+  }, []);
+
+  const handleLogin = (email, password) => {
+    if (!authData) {
+      console.log("No authentication data available");
+      alert("Invalid global credentials!");
+      return;
+    }
+
+    let userRole = null;
+    let userData = null;
+
+    if (email === "admin@me.com" && password === "123") {
+      userRole = "admin";
+      userData = authData.admin[0]; // Assuming admin data exists in authData.admin[0]
+    } else {
+      const employee = authData.employees.find(
+        (e) => e.email === email && e.password === password
+      );
+      if (employee) {
+        userRole = "employee";
+        userData = employee;
+      }
+    }
+
+    if (userRole) {
+      setUser(userRole);
+      setLoggedInUserData(userData);
+      setLocalStorage("loggedInUser", { role: userRole, data: userData });
+    } else {
+      console.log("Invalid credentials");
+      alert("Invalid credentials!");
+    }
+  };
+
+  return (
+    <>
+      <h1>Application</h1>
+      {!user ? (
+        <Login handleLogin={handleLogin} />
+      ) : user === "admin" ? (
+        <AdminDashboard data={loggedInUserData} />
+      ) : user === "employee" ? (
+        <EmployeeDashboard data={loggedInUserData} />
+      ) : null}
+    </>
+  );
+};
+
+export default App;
+
+
+-----
+// this is the basic logic I wrote according to the tutor of this tutorial
+// it is also a decent logic but lacks in clear statements and has nested if else if statements
+// which makes it undesirable to me
+
+ // const handleLogin = (email, password) => {
+  //   if (email === "admin@me.com" && password === "123") {
+  //     setUser("admin");
+  //     const adminData = authData.admin[0];
+  //     localStorage.setItem(
+  //       "loggedInUser",
+  //       JSON.stringify({ role: "admin", data: adminData })
+  //     );
+  //     setLoggedInUserData(adminData);
+  //   } else if (authData) {
+  //     const employee = authData.employees.find(
+  //       (e) => email === e.email && password === e.password
+  //     );
+  //     console.log(employee);
+  //     if (employee) {
+  //       setUser("employee");
+  //       setLoggedInUserData(employee);
+  //       localStorage.setItem(
+  //         "loggedInUser",
+  //         JSON.stringify({ role: "employee", data: employee })
+  //       );
+  //     } else {
+  //       console.log("Invalid creds for employee");
+  //       alert("Invalid credentials!");
+  //     }
+  //   } else {
+  //     console.log("No auth data available!!!");
+  //     alert("Invalid global credentials!");
+  //   }
+  // };
+
+
+-----------------------------------------------------------------------------------------------
+
+//for setting and getting the localstorage fuctions in separate file
+
+// utils/localStorage.js
+export const getLocalStorage = (key) => {
+  return JSON.parse(localStorage.getItem(key));
+};
+
+export const setLocalStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
