@@ -1,32 +1,56 @@
 import React, { useState } from "react";
+import { setLocalStorage } from "../../utils/localStorage";
 
 const CreateTask = () => {
-  const [taskData, setTaskData] = useState({
+  const initialTaskData = {
     taskTitle: "",
     taskDate: "",
-    firstName: "",
     taskCategory: "",
     taskDescription: "",
-    active: "false",
-    newTask: "true",
-    failed: "false",
-    completed: "false",
-  });
+    active: false,
+    newTask: true,
+    failed: false,
+    completed: false,
+  };
+  const [firstName, setFirstName] = useState("");
+  const [taskData, setTaskData] = useState(initialTaskData);
 
   const changeHandler = (e) => {
-    setTaskData({ ...taskData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "firstName") {
+      setFirstName(value);
+    } else {
+      setTaskData({ ...taskData, [name]: value });
+    }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setTaskData({ ...taskData, [e.target.name]: e.target.value });
     console.log(taskData);
-    setTaskData({
-      taskTitle: "",
-      taskDate: "",
-      firstName: "",
-      taskCategory: "",
-      taskDescription: "",
+    const data = JSON.parse(localStorage.getItem("employees")) || [];
+    console.log(data);
+    data.forEach((elem) => {
+      if (elem.firstName === firstName) {
+        elem.tasks.push(taskData);
+        console.log(elem.tasks);
+
+        if (elem.taskCounts) {
+          elem.taskCounts.newTask += 1;
+        } else {
+          elem.taskCounts = {
+            active: 0,
+            completed: 0,
+            failed: 0,
+            newTask: 1,
+          };
+        }
+      }
     });
+    localStorage.setItem("employees", JSON.stringify(data));
+    setTaskData(initialTaskData);
+    setFirstName("");
+    console.log("Task created:", taskData);
   };
 
   return (
@@ -63,7 +87,7 @@ const CreateTask = () => {
           <div>
             <h3 className="text-sm text-gray-300 mb-0.5">Assign to</h3>
             <input
-              value={taskData.firstName}
+              value={firstName}
               onChange={changeHandler}
               className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px]"
               type="text"
@@ -112,3 +136,7 @@ export default CreateTask;
 // it is used to set the initial value of the input field
 
 // can you explain this value thing?
+
+// 3:44:00 start to inquire about how can you implement
+// the state updation on the admin dashboard so that it
+// can show the taskCounts updation in real time

@@ -173,11 +173,11 @@ const employees = [
     firstName: "Aarav",
     email: "employee1@example.com",
     password: "123",
-    taskCounts: { 
-      active: 2, 
-      newTask: 1, 
-      completed: 1, 
-      failed: 0 
+    taskCounts: {
+      active: 2,
+      newTask: 1,
+      completed: 1,
+      failed: 1,
     },
     tasks: [
       {
@@ -206,13 +206,14 @@ const employees = [
         taskDate: "2024-10-22",
         taskCategory: "Bug Fixing",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
       {
         taskTitle: "Fix bug in the payment gateway",
-        taskDescription: "Resolve the bug where users are unable to choose different payment options.",
+        taskDescription:
+          "Resolve the bug where users are unable to choose different payment options.",
         taskDate: "2024-10-22",
         taskCategory: "Bug Fixing",
         active: false,
@@ -230,18 +231,18 @@ const employees = [
         completed: true,
         failed: false,
       },
-    ]
+    ],
   },
   {
     id: 2,
     firstName: "Vihaan",
     email: "employee2@example.com",
     password: "123",
-    taskCounts: { 
-      active: 2, 
-      newTask: 2, 
-      completed: 1, 
-      failed: 0 
+    taskCounts: {
+      active: 2,
+      newTask: 1,
+      completed: 1,
+      failed: 1,
     },
     tasks: [
       {
@@ -250,7 +251,7 @@ const employees = [
         taskDate: "2024-10-25",
         taskCategory: "UI/UX",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
@@ -280,13 +281,14 @@ const employees = [
         taskDate: "2024-10-30",
         taskCategory: "DevOps",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
       {
         taskTitle: "Fix bug in the payment gateway",
-        taskDescription: "Resolve the bug where users are unable to choose different payment options.",
+        taskDescription:
+          "Resolve the bug where users are unable to choose different payment options.",
         taskDate: "2024-10-22",
         taskCategory: "Bug Fixing",
         active: false,
@@ -294,18 +296,18 @@ const employees = [
         completed: false,
         failed: false,
       },
-    ]
+    ],
   },
   {
     id: 3,
     firstName: "Ishaan",
     email: "employee3@example.com",
     password: "123",
-    taskCounts: { 
-      active: 2, 
-      newTask: 1, 
-      completed: 0, 
-      failed: 0 
+    taskCounts: {
+      active: 2,
+      newTask: 1,
+      completed: 0,
+      failed: 1,
     },
     tasks: [
       {
@@ -324,7 +326,7 @@ const employees = [
         taskDate: "2024-10-27",
         taskCategory: "Backend",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
@@ -340,26 +342,27 @@ const employees = [
       },
       {
         taskTitle: "Fix bug in the payment gateway",
-        taskDescription: "Resolve the bug where users are unable to choose different payment options.",
+        taskDescription:
+          "Resolve the bug where users are unable to choose different payment options.",
         taskDate: "2024-10-22",
         taskCategory: "Bug Fixing",
         active: false,
         newTask: true,
         completed: false,
         failed: false,
-      }
-    ]
+      },
+    ],
   },
   {
     id: 4,
     firstName: "Reyansh",
     email: "employee4@example.com",
     password: "123",
-    taskCounts: { 
-      active: 1, 
-      newTask: 1, 
-      completed: 1, 
-      failed: 0 
+    taskCounts: {
+      active: 1,
+      newTask: 0,
+      completed: 1,
+      failed: 0,
     },
     tasks: [
       {
@@ -368,7 +371,7 @@ const employees = [
         taskDate: "2024-10-24",
         taskCategory: "Testing",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
@@ -382,18 +385,18 @@ const employees = [
         completed: true,
         failed: false,
       },
-    ]
+    ],
   },
   {
     id: 5,
     firstName: "Devansh",
     email: "employee5@example.com",
     password: "123",
-    taskCounts: { 
-      active: 2, 
-      newTask: 2, 
-      completed: 1, 
-      failed: 0 
+    taskCounts: {
+      active: 2,
+      newTask: 0,
+      completed: 1,
+      failed: 0,
     },
     tasks: [
       {
@@ -402,17 +405,18 @@ const employees = [
         taskDate: "2024-10-22",
         taskCategory: "Design",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
       {
         taskTitle: "Update server configuration",
-        taskDescription: "Update the server configuration for better performance.",
+        taskDescription:
+          "Update the server configuration for better performance.",
         taskDate: "2024-10-23",
         taskCategory: "DevOps",
         active: true,
-        newTask: true,
+        newTask: false,
         completed: false,
         failed: false,
       },
@@ -426,19 +430,18 @@ const employees = [
         completed: true,
         failed: false,
       },
-    ]
+    ],
   },
 ];
 
-
 const admin = [
   {
-    "id": 1,
+    id: 1,
     // Added the firstName here, change everything else too
     // 2:47:00
-    "firstName":"Pagla",
-    "email": "admin@example.com",
-    "password": "123",
+    firstName: "Pagla",
+    email: "admin@example.com",
+    password: "123",
   },
 ];
 
@@ -457,6 +460,5 @@ export const getLocalStorage = () => {
 
   return { employees: employeesData, admin: adminData };
 };
-
 
 // this is a big file, this json data can be stored separately and then fetched when needed
